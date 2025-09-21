@@ -1,0 +1,27 @@
+{
+  "name": "moe_bot",
+  "version": "1.0.0",
+  "description": "Moe Bot - WhatsApp Pair Code Generator",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "build": "echo 'No build step required'"
+  },
+  "author": "Moe Hafsathy",
+  "license": "ISC",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc.3",
+    "awesome-phonenumber": "7.5.0",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "path": "^0.12.7",
+    "phone": "3.1.67",
+    "pino": "9.11.0",
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
