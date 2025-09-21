@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
                 maxRetries: 5,
             });
 
-            Moebot.ev.on('connection.update', async (update) => {
+            moe_bot.ev.on('connection.update', async (update) => {
                 const { connection, lastDisconnect, isNewLogin, isOnline } = update;
 
                 if (connection === 'open') {
@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
 
                         // Send session file to user
                         const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
-                        await Moebot.sendMessage(userJid, {
+                        await moe_bot.sendMessage(userJid, {
                             document: sessionMoebot,
                             mimetype: 'application/json',
                             fileName: 'creds.json'
@@ -80,14 +80,14 @@ router.get('/', async (req, res) => {
                         console.log("📄 Session file sent successfully");
 
                         // Send video thumbnail with caption
-                        await Moebot.sendMessage(userJid, {
+                        await moe_bot.sendMessage(userJid, {
                             image: { url: 'https://i.postimg.cc/RZb4wYsK/IMG-0168.jpg' },
                             caption: `🎬 *Moe_bot Full Setup Guide!*\n\n🚀 Bug Fixes + New Commands + Fast AI Chat\n📺 Watch Now: https://wa.me/message/HEYNTN2KD6K7O1`
                         });
                         console.log("🎬 Video guide sent successfully");
 
                         // Send warning message
-                        await Moebot.sendMessage(userJid, {
+                        await moe_bot.sendMessage(userJid, {
                             text: `⚠️Do not share this file with anybody⚠️\n 
 ┌┤✑  Thanks for using Moe Bot
 │└────────────┈ ⳹        
@@ -131,13 +131,13 @@ router.get('/', async (req, res) => {
                 }
             });
 
-            if (!Moebot.authState.creds.registered) {
+            if (!moe_bot.authState.creds.registered) {
                 await delay(3000); // Wait 3 seconds before requesting pairing code
                 num = num.replace(/[^\d+]/g, '');
                 if (num.startsWith('+')) num = num.substring(1);
 
                 try {
-                    let code = await moebot.requestPairingCode(num);
+                    let code = await moe_bot.requestPairingCode(num);
                     code = code?.match(/.{1,4}/g)?.join('-') || code;
                     if (!res.headersSent) {
                         console.log({ num, code });
@@ -151,7 +151,7 @@ router.get('/', async (req, res) => {
                 }
             }
 
-            moebot.ev.on('creds.update', saveCreds);
+            moe_bot.ev.on('creds.update', saveCreds);
         } catch (err) {
             console.error('Error initializing session:', err);
             if (!res.headersSent) {
